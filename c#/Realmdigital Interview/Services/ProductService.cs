@@ -11,11 +11,26 @@ namespace Realmdigital_Interview.Services
     public class ProductService : IProductService
     {
         private readonly INetworkClient _networkClient;
-        private readonly string _webUrlBase = ConfigurationManager.AppSettings["WebUrlBase"];
+        private readonly string _webUrlBase;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductService"/> class.
+        /// </summary>
+        /// <param name="networkClient">The network client.</param>
         public ProductService( INetworkClient networkClient )
         {
             _networkClient = networkClient;
+            _webUrlBase = ConfigurationManager.AppSettings["WebUrlBase"] ?? "http://192.168.0.241/eanlist?type=Web";
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProductService"/> class.
+        /// </summary>
+        /// <param name="networkClient">The network client.</param>
+        /// <param name="webUrlBase">The web URL base.</param>
+        public ProductService( INetworkClient networkClient, string webUrlBase ) : this( networkClient )
+        {
+            _webUrlBase = webUrlBase;
         }
 
         /// <summary>
